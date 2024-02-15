@@ -2,7 +2,6 @@ package gpt3
 
 import "fmt"
 
-// APIError represents an error that occurred on an API.
 type APIError struct {
 	StatusCode int    `json:"status_code"`
 	Message    string `json:"message"`
@@ -13,12 +12,10 @@ func (e APIError) Error() string {
 	return fmt.Sprintf("[%d:%s] %s", e.StatusCode, e.Type, e.Message)
 }
 
-// APIErrorResponse is the full error respnose that has been returned by an API.
 type APIErrorResponse struct {
 	Error APIError `json:"error"`
 }
 
-// EngineObject contained in an engine response.
 type EngineObject struct {
 	ID     string `json:"id"`
 	Object string `json:"object"`
@@ -26,30 +23,23 @@ type EngineObject struct {
 	Ready  bool   `json:"ready"`
 }
 
-// EnginesResponse is returned from the Engines API.
 type EnginesResponse struct {
 	Data   []EngineObject `json:"data"`
 	Object string         `json:"object"`
 }
 
-// ChatCompletionRequestMessage is a message to use as the context for the chat completion API.
 type ChatCompletionRequestMessage struct {
-	// Role is the role is the role of the the message. Can be "system", "user", or "assistant"
+
 	Role string `json:"role"`
 
-	// Content is the content of the message
 	Content string `json:"content"`
 }
 
-// ChatCompletionRequest is a request for the chat completion API.
 type ChatCompletionRequest struct {
-	// Model is the name of the model to use. If not specified, will default to gpt-3.5-turbo.
 	Model string `json:"model"`
 
-	// Messages is a list of messages to use as the context for the chat completion.
 	Messages []ChatCompletionRequestMessage `json:"messages"`
 
-	// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic
 	Temperature *float32 `json:"temperature,omitempty"`
 
 	// An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
@@ -245,27 +235,24 @@ type EditsResponseChoice struct {
 	Index int    `json:"index"`
 }
 
-// EditsResponseUsage is a structure used in the response from a request to the edits API.
 type EditsResponseUsage struct {
 	PromptTokens     int `json:"prompt_tokens"`
 	CompletionTokens int `json:"completion_tokens"`
 	TotalTokens      int `json:"total_tokens"`
 }
 
-// SearchRequest is a request for the document search API.
+
 type SearchRequest struct {
 	Documents []string `json:"documents"`
 	Query     string   `json:"query"`
 }
 
-// SearchData is a single search result from the document search API.
 type SearchData struct {
 	Document int     `json:"document"`
 	Object   string  `json:"object"`
 	Score    float64 `json:"score"`
 }
 
-// SearchResponse is the full response from a request to the document search API.
 type SearchResponse struct {
 	Data   []SearchData `json:"data"`
 	Object string       `json:"object"`
